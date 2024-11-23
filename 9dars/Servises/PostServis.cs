@@ -77,16 +77,46 @@ public class PostServis
     public Post GetMostLikedPost()
     {
         Post mostLikedPost = null;
-        var mostView = 0;
+        var mostLike = 0;
         foreach (var post in posts)
         {
-            if (post.ViewerNames.Count > mostView)
+            if (post.QuantityLikes > mostLike)
             {
-                mostView = post.ViewerNames.Count;
+                mostLike = post.ViewerNames.Count;
                 mostLikedPost = post;
             }
         }
 
         return mostLikedPost;
+    }
+    public Post GetMostCommentedPost()
+    {
+        Post mostCommentedPost = null;
+        var mostComment = 0;
+        foreach (var post in posts)
+        {
+            if (post.Comments.Count > mostComment)
+            {
+                mostComment = post.ViewerNames.Count;
+                mostCommentedPost = post;
+            }
+        }
+
+        return mostCommentedPost;
+    }
+
+    public List<Post> GetPostsByComment(string comment)
+    {
+        var ComnetdetPosts = new List<Post>();
+        foreach (var post in posts)
+        {
+            var comments = post.Comments;
+            if (comment.Contains(comment) is true)
+            {
+                ComnetdetPosts.Add(post);
+            }
+        }
+
+        return ComnetdetPosts;
     }
 }
