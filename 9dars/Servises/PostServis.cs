@@ -61,7 +61,7 @@ public class PostServis
 
     public Post GetMostViewedPost()
     {
-        Post mostViewedPost = null;
+        var mostViewedPost = new Post();
         var mostView = 0;
         foreach (var post in posts)
         {
@@ -76,7 +76,7 @@ public class PostServis
     }
     public Post GetMostLikedPost()
     {
-        Post mostLikedPost = null;
+        Post mostLikedPost = new Post();
         var mostLike = 0;
         foreach (var post in posts)
         {
@@ -91,7 +91,7 @@ public class PostServis
     }
     public Post GetMostCommentedPost()
     {
-        Post mostCommentedPost = null;
+        Post mostCommentedPost = new Post();
         var mostComment = 0;
         foreach (var post in posts)
         {
