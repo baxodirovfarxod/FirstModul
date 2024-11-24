@@ -7,10 +7,10 @@ namespace _9dars
     {
         static void Main(string[] args)
         {
-            StartFrontEnd();
+            
         }
 
-        public static void StartFrontEnd()
+        public static void StartFrontEndPost()
         {
             var postservic = new PostServis();
 
