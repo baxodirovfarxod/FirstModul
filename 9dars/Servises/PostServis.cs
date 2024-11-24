@@ -7,15 +7,21 @@ public class PostServis
     private List<Post> posts;
     public PostServis()
     {
-        var posts = new List<Post>();
+        posts = new List<Post>();
     }
 
-    public Post AddNewPost(Post post)
+    public bool AddNewPost(Post post)
     {
-        post.id = Guid.NewGuid();
-        posts.Add(post);
-
-        return post;
+        try
+        {
+            post.id = Guid.NewGuid();
+            posts.Add(post);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
     public Post GetByPostId(Guid id)
     {
@@ -48,7 +54,7 @@ public class PostServis
         {
             return false;
         }
-        var index = posts.IndexOf(updatingPost);
+        var index = posts.IndexOf(postFromDB);
         posts[index] = updatingPost;
 
         return true;
@@ -57,6 +63,42 @@ public class PostServis
     public List<Post> GetAllPosts()
     {
         return posts;
+    }
+
+    public void DisplayInfo(Post post)
+    {
+        Console.WriteLine($"\nPost ID: {post.id}");
+        Console.WriteLine($"Owner Name: {post.OwnerName}");
+        Console.WriteLine($"Post Type: {post.Type}");
+        Console.WriteLine($"Post Description: {post.Description}");
+        Console.WriteLine($"Posted Time: {post.PostedTime}");
+        Console.WriteLine($"Quantity of Likes: {post.QuantityLikes}");
+
+        Console.WriteLine("Comments:");
+        if (post.Comments != null && post.Comments.Count > 0)
+        {
+            foreach (var comment in post.Comments)
+            {
+                Console.WriteLine($"  - {comment}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("  No comments yet.");
+        }
+
+        Console.WriteLine("\nViewer Names:");
+        if (post.ViewerNames != null && post.ViewerNames.Count > 0)
+        {
+            foreach (var name in post.ViewerNames)
+            {
+                Console.WriteLine($"  - {name}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("  No viewers yet.");
+        }
     }
 
     public Post GetMostViewedPost()
@@ -118,5 +160,38 @@ public class PostServis
         }
 
         return ComnetdetPosts;
+    }
+    public bool AddLike(Guid id)
+    {
+        var postFromDB = GetByPostId(id);
+        if (postFromDB is null)
+        {
+            return false;
+        }
+        postFromDB.QuantityLikes++;
+
+        return true;
+    }
+    public bool AddCommentToPost(Guid id, string comment)
+    {
+        var postFromDB = GetByPostId(id);
+        if (postFromDB is null)
+        {
+            return false;
+        }
+        postFromDB.Comments.Add(comment);
+
+        return true;
+    }
+    public bool AddViewerName(Guid id, string name)
+    {
+        var postFromDB = GetByPostId(id);
+        if (postFromDB is null)
+        {
+            return false;
+        }
+        postFromDB.ViewerNames.Add(name);
+
+        return true;
     }
 }
