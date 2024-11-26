@@ -7,9 +7,9 @@ namespace _9dars
     {
         static void Main(string[] args)
         {
-            
+            StartFrontEndEvent();
         }
-
+        /*
         public static void StartFrontEndPost()
         {
             var postservic = new PostServis();
@@ -178,6 +178,156 @@ namespace _9dars
                     else
                     {
                         Console.WriteLine("Xato !");
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+        */
+        public static void StartFrontEndEvent()
+        {
+            var eventservic = new EventServices();
+            while (true)
+            {
+                Console.WriteLine("0. Stop");
+                Console.WriteLine("1. Add event");
+                Console.WriteLine("2. Update event");
+                Console.WriteLine("3. Delete event");
+                Console.WriteLine("4. Read all events");
+                Console.WriteLine("5. Read from ID");
+                Console.WriteLine("6. Get events by location");
+                Console.WriteLine("7. Get popular event");
+                Console.WriteLine("8. Get max tagged event");
+                Console.WriteLine("9. Add person to event");
+                var option = Console.ReadLine();
+                if (option == "0")
+                {
+                    break;
+                }
+                else if (option == "1")
+                {
+                    var newEvent = new Event();
+                    Console.Write("Title: ");
+                    newEvent.Title = Console.ReadLine();
+                    Console.Write("Location: ");
+                    newEvent.Location = Console.ReadLine();
+                    Console.Write("Date: ");
+                    newEvent.Date = DateTime.Parse(Console.ReadLine());
+                    Console.Write("Description: ");
+                    newEvent.Description = Console.ReadLine();
+                    Console.Write("Attendees: ");
+                    newEvent.Attendees = Console.ReadLine().Split(", ").ToList();
+                    Console.Write("Tags: ");
+                    newEvent.Tags = Console.ReadLine().Split(", ").ToList();
+                    var result = eventservic.AddNewEvent(newEvent);
+                    if (result is true)
+                    {
+                        Console.WriteLine("Qo'wldi !");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Xatolik !");
+                    }
+                }
+                else if (option == "2")
+                {
+                    var newEvent = new Event();
+                    Console.Write("ID: ");
+                    newEvent.ID = Guid.Parse(Console.ReadLine());
+                    var oldEventInformation = eventservic.GetEventByID(newEvent.ID);
+                    Console.WriteLine("            ------Old Information------");
+                    eventservic.DisplayInfo(oldEventInformation);
+                    Console.WriteLine("            ------Update Information------");
+                    Console.Write("Title: ");
+                    newEvent.Title = Console.ReadLine();
+                    Console.Write("Location: ");
+                    newEvent.Location = Console.ReadLine();
+                    Console.Write("Date: ");
+                    newEvent.Date = DateTime.Parse(Console.ReadLine());
+                    Console.Write("Description: ");
+                    newEvent.Description = Console.ReadLine();
+                    Console.Write("Attendees: ");
+                    newEvent.Attendees = Console.ReadLine().Split(", ").ToList();
+                    Console.Write("Tags: ");
+                    newEvent.Tags = Console.ReadLine().Split(", ").ToList();
+                    var result = eventservic.UpgradeEvent(newEvent);
+                    if (result is true)
+                    {
+                        Console.WriteLine("Updated !");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Error !");
+                    }
+                }
+                else if (option == "3")
+                {
+                    Console.Write("ID: ");
+                    var id = Guid.Parse(Console.ReadLine());
+                    var result = eventservic.DeleteEvent(id);
+                    if (result is true)
+                    {
+                        Console.WriteLine("O'chirildi !");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Xatolik !");
+                    }
+                }
+                else if (option == "4")
+                {
+                    var events = eventservic.GetAllEvents();
+                    foreach (var eventItem in events)
+                    {
+                        eventservic.DisplayInfo(eventItem);
+                    }
+                }
+                else if (option == "5")
+                {
+                    Console.Write("ID: ");
+                    var id = Guid.Parse(Console.ReadLine());
+                    var eventItem = eventservic.GetEventByID(id);
+                    eventservic.DisplayInfo(eventItem);
+                }
+                else if (option == "6")
+                {
+                    Console.Write("Enter location: ");
+                    var location = Console.ReadLine();
+                    var events = eventservic.GetEventsByLocation(location);
+                    foreach(var eventItem in events)
+                    {
+                        eventservic.DisplayInfo(eventItem);
+                    }
+                }
+                else if (option == "7")
+                {
+                    var mostPopularEvent = eventservic.GetPopularEvent();
+                    eventservic.DisplayInfo(mostPopularEvent);
+                }
+                else if (option == "8")
+                {
+                    var maxTagged = eventservic.GetMaxTaggedEvent();
+                    eventservic.DisplayInfo(maxTagged);
+                }
+                else if (option == "9")
+                {
+                    Console.Write("ID: ");
+                    var id = Guid.Parse(Console.ReadLine());
+                    Console.Write("Enter names: ");
+                    var names = Console.ReadLine().Split(", ").ToList();
+                    var result = eventservic.AddPersonToEvent(id, names);
+                    if (result is true)
+                    {
+                        Console.WriteLine("Qo'wldi");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Xatolik !");
                     }
                 }
                 Console.ReadKey();

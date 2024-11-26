@@ -68,6 +68,10 @@ public class EventServices
     /// Display Info
     public void DisplayInfo(Event _event)
     {
+        if (_event is null)
+        {
+            Console.WriteLine("");
+        }
         Console.WriteLine($"ID: {_event.ID}");
         Console.WriteLine($"Title: {_event.Title}");
         Console.WriteLine($"Location: {_event.Location}");
@@ -127,14 +131,14 @@ public class EventServices
         return mostTaggedEvent;
     }
     /// Add Person To Event
-    public bool AddPersonToEvent(Guid Id, string person)
+    public bool AddPersonToEvent(Guid Id, List<string> person)
     {
         var EventFromDB = GetEventByID(Id);
         if (EventFromDB is null)
         {
             return false;
         }
-        EventFromDB.Attendees.Add(person);
+        EventFromDB.Attendees.AddRange(person);
 
         return true;
     }
