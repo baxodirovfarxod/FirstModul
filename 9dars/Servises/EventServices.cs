@@ -10,12 +10,12 @@ public class EventServices
         events = new List<Event>();
     }
     /// Add 
-    public bool AddNewEvent(Event NewEvent)
+    public bool AddNewEvent(Event newEvent)
     {
         try
         {
-            NewEvent.ID = Guid.NewGuid();
-            events.Add(NewEvent);
+            newEvent.ID = Guid.NewGuid();
+            events.Add(newEvent);
             return true;
         }
         catch
@@ -25,11 +25,11 @@ public class EventServices
     }
     public Event GetEventByID(Guid ID)
     {
-        foreach(var _event in events)
+        foreach(var eventDB in events)
         {
-            if (_event.ID == ID)
+            if (eventDB.ID == ID)
             {
-                return _event;
+                return eventDB;
             }
         }
 
@@ -122,7 +122,7 @@ public class EventServices
         var mostTaggedEvent = new Event();
         foreach (var eventItem in events)
         {
-            if (eventItem.Attendees.Count > mostTaggedEvent.Attendees.Count)
+            if (eventItem.Tags.Count > mostTaggedEvent.Tags.Count)
             {
                 mostTaggedEvent = eventItem;
             }
@@ -133,12 +133,12 @@ public class EventServices
     /// Add Person To Event
     public bool AddPersonToEvent(Guid Id, List<string> person)
     {
-        var EventFromDB = GetEventByID(Id);
-        if (EventFromDB is null)
+        var eventFromDB = GetEventByID(Id);
+        if (eventFromDB is null)
         {
             return false;
         }
-        EventFromDB.Attendees.AddRange(person);
+        eventFromDB.Attendees.AddRange(person);
 
         return true;
     }
